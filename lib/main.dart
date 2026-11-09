@@ -1,73 +1,43 @@
 import 'package:flutter/material.dart';
+import 'models/user_profile.dart';
+import 'screens/onboarding/welcome_screen.dart';
+import 'services/storage_service.dart';
+import 'theme/app_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // needed before async work in main
+  final profile = await StorageService.loadProfile();
+  runApp(BreatheFreeApp(profile: profile));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BreatheFreeApp extends StatelessWidget {
+  const BreatheFreeApp({super.key, this.profile});
+  final UserProfile? profile;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-      
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'BreatheFree',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      // Already onboarded? Skip straight to home.
+      home: profile == null ? const WelcomeScreen() : HomePlaceholder(profile: profile!),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      
-      _counter++;
-    });
-  }
+/// Temporary screen. We replace it with the real Dashboard in phase 3.
+class HomePlaceholder extends StatelessWidget {
+  const HomePlaceholder({super.key, required this.profile});
+  final UserProfile profile;
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      appBar: AppBar(
-       
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-       
-        title: Text(widget.title),
-      ),
       body: Center(
-        
-        child: Column(
-          
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: Text('Dashboard for ${profile.name} coming next',
+            style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center),
       ),
     );
   }
