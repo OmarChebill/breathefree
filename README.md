@@ -1,2 +1,14 @@
-# BreatheFree
-A Flutter based mobile application designed to help users quit smoking through personalized progress tracking , daily motivation, habit monitoring , and supportive tools for building a smoke-free lifestyle .
+BreatheFree 🌿
+A small step towards a smoke-free life 
+About :
+BreatheFree is a mobile application I'm building with Flutter to help people quit smoking as my first mini-project.
+Features :
+- Progress Tracking
+- Money Saved
+- Daily Motivation
+Technologies :
+- Flutter
+- Dart
+- Git & GitHub
+Current Status :
+In Development 
